@@ -1,0 +1,7 @@
+Age,Salary,Department,Age_mean,Salary_mean,Age_median,Salary_median,Department_mode
+25.0,50000.0,HR,25.0,50000.0,25.0,50000.0,HR
+,54000.0,HR,32.0,54000.0,31.5,54000.0,HR
+28.0,,IT,28.0,55500.0,28.0,56000.0,IT
+35.0,58000.0,,35.0,58000.0,35.0,58000.0,Finance
+,60000.0,Finance,32.0,60000.0,31.5,60000.0,Finance
+40.0,,Finance,40.0,55500.0,40.0,56000.0,Finance

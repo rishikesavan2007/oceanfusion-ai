@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  /* Anti-Gravity Futuristic Palette */
+  --color-primary: #6366F1;
+  --color-primary-dark: #4F46E5;
+  --color-secondary: #0EA5E9;
+  --color-accent: #A855F7;
+  --color-neon-cyan: #22D3EE;
+  --color-neon-blue: #3B82F6;
+
+  /* Status */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+
+  /* Dark Backgrounds */
+  --color-light-bg: #030712;
+  --color-light-card: rgba(15, 23, 42, 0.6);
+  --color-dark-bg: #030712;
+  --color-dark-card: rgba(15, 23, 42, 0.6);
+
+  /* Text */
+  --color-text-main: #F1F5F9;
+  --color-text-muted: #64748B;
+  --color-text-light: #F8FAFC;
+  --color-text-light-muted: #94A3B8;
+
+  /* Borders */
+  --color-border-light: rgba(148, 163, 184, 0.1);
+  --color-border-dark: rgba(148, 163, 184, 0.08);
+
+  /* Glass */
+  --color-glass: rgba(15, 23, 42, 0.5);
+  --color-glass-border: rgba(148, 163, 184, 0.12);
+
+  /* Fonts */
+  --font-manrope: "Manrope", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-grotesk: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 12px 40px rgba(99, 102, 241, 0.15);
+  --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.12);
+  --shadow-neon: 0 0 20px rgba(34, 211, 238, 0.2);
+
+  /* Animations */
+  --animate-fade-in: fadeIn 0.4s ease-out;
+  --animate-slide-up: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+}
+
+@layer base {
+  body {
+    @apply font-inter antialiased text-text-main bg-dark-bg;
+    margin: 0;
+    background: #030712;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-manrope tracking-tight font-bold text-text-light;
+  }
+}
+
+/* Glass card utility */
+@utility glass-card {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    border-color: rgba(148, 163, 184, 0.15);
+  }
+}
+
+@utility saas-card {
+  @apply glass-card;
+}
+
+@utility glass-nav {
+  background: rgba(3, 7, 18, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  z-index: 30;
+}
+
+@utility stat-number {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@utility neon-glow {
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 30px rgba(99, 102, 241, 0.2);
+}
+
+@utility gradient-text {
+  background: linear-gradient(135deg, #6366F1, #22D3EE, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 99px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.35);
+  }
+}
+
+/* Background mesh gradient */
+.bg-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(34, 211, 238, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+    #030712;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
