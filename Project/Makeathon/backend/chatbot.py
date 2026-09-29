@@ -15,16 +15,18 @@ chat_history = []
 def ask_chatbot(user_message):
     global chat_history
 
-    # Get incident data from Supabase
-    incidents = (
-        supabase
-        .table("incidents")
-        .select("*")
-        .execute()
-        .data
-    )
+    try:
+        # Get a small set of incident data from Supabase
+        incidents = (
+            supabase
+            .table("incidents")
+            .select("id, hazard_type, trust_score, priority")
+            .limit(20)
+            .execute()
+            .data
+        )
 
-    system_prompt = f"""
+        system_prompt = f"""
 You are OCEANFUSION AI, an ocean hazard assistant.
 
 Current incident database:
@@ -37,41 +39,41 @@ Instructions:
 - Help emergency teams understand ocean hazards.
 """
 
-    chat_history.append({
-        "role": "user",
-        "content": user_message
-    })
+        chat_history.append({
+            "role": "user",
+            "content": user_message
+        })
 
+        messages = [
+            {
+                "role": "system",
+                "content": system_prompt
+            }
+        ]
 
-    messages = [
-        {
-            "role": "system",
-            "content": system_prompt
-        }
-    ]
+        # Keep only the last 6 messages so the request stays small
+        messages.extend(chat_history[-6:])
 
-    messages.extend(chat_history)
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=messages,
+            max_tokens=500,
+            temperature=0.3
+        )
 
+        reply = response.choices[0].message.content
 
-    response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=messages,
-        max_tokens=500,
-        temperature=0.3
-    )
+        chat_history.append({
+            "role": "assistant",
+            "content": reply
+        })
 
+        return reply
 
-    reply = response.choices[0].message.content
-
-
-    chat_history.append({
-        "role": "assistant",
-        "content": reply
-    })
-
-
-    return reply
-
+    except Exception as e:
+        if chat_history and chat_history[-1]["role"] == "user":
+            chat_history.pop()
+        return f"Chatbot error: {str(e)}"
 
 
 def clear_chat():
