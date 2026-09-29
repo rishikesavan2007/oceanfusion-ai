@@ -52,12 +52,12 @@ Instructions:
         ]
 
         # Keep only the last 6 messages so the request stays small
-        messages.extend(chat_history[-6:])
+        messages.extend(chat_history[-6:]) 
 
         response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             messages=messages,
-            max_tokens=500,
+            max_tokens=1500,
             temperature=0.3
         )
 
